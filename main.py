@@ -1,6 +1,7 @@
 import os
 from datetime import date
 from functools import wraps
+import psycopg2
 
 from sqlalchemy import exc
 from flask import Flask, abort, render_template, redirect, url_for, flash
@@ -23,6 +24,22 @@ Bootstrap5(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+# CONNECT TO DB
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DB_URI", "sqlite:///posts.db")
+db = SQLAlchemy()
+db.init_app(app)
+
+# Connect with Postgresql
+conn = psycopg2.connect(
+    database="verceldb",
+    user="default",
+    password="ZICSbVu48dNz",
+    host="ep-proud-mountain-73630164-pooler.us-east-1.postgres.vercel-storage.com",
+    port="5432"
+)
+
+cur = conn.cursor()
+
 # Gravatar
 gravatar = Gravatar(app, size=100, rating='g', default='retro', force_default=False, force_lower=False, use_ssl=False,
                     base_url=None)
@@ -31,12 +48,6 @@ gravatar = Gravatar(app, size=100, rating='g', default='retro', force_default=Fa
 @login_manager.user_loader
 def load_user(user_id):
     return db.get_or_404(User, user_id)
-
-
-# CONNECT TO DB
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DB_URI")
-db = SQLAlchemy()
-db.init_app(app)
 
 
 # CONFIGURE TABLES
