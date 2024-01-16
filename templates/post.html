@@ -34,12 +34,12 @@
         </div>
 
         <!-- Comments Area -->
-        <!-- TODO: Add a CKEditor for commenting below -->
+        <!-- Add a CKEditor for commenting below -->
         {{ ckeditor.load() }} {{ ckeditor.config(name='comment') }} {{
         render_form(comment_form, novalidate=True, button_map={"submit":
         "primary"}) }}
         <div class="comment">
-          <!-- TODO: Show all the comments on a post -->
+          <!-- Show all the comments on a post -->
           <h3>Comments</h3>
           <!-- Flash Messages -->
           {% with messages = get_flashed_messages() %} {% if messages %} {% for
