@@ -31,10 +31,10 @@ db.init_app(app)
 
 # Connect with Postgresql
 conn = psycopg2.connect(
-    database="verceldb",
-    user="default",
-    password="ZICSbVu48dNz",
-    host="ep-proud-mountain-73630164-pooler.us-east-1.postgres.vercel-storage.com",
+    database=os.environ.get("POSTGRES_DATABASE"),
+    user=os.environ.get("POSTGRES_USER"),
+    password=os.environ.get("POSTGRES_PASSWORD"),
+    host=os.environ.get("POSTGRES_HOST"),
     port="5432"
 )
 
